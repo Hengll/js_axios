@@ -1,20 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.css'
+    integrity='sha512-VcyUgkobcyhqQl74HS1TcTMnLEfdfX6BbjhH8ZBjFU9YTwHwtoRtWSGzhpDVEJqtMlvLM2z3JIixUOu63PNCYQ=='
+    crossorigin='anonymous' />
 </head>
 
 <body>
+  <form>
+    <select name="area" id="area">
+      <option value="0">---縣市---</option>
+      <option value="宜蘭縣">宜蘭縣</option>
+      <option value="桃園市">桃園市</option>
+      <option value="新竹縣">新竹縣</option>
+      <option value="苗栗縣">苗栗縣</option>
+      <option value="彰化縣">彰化縣</option>
+      <option value="南投縣">南投縣</option>
+      <option value="雲林縣">雲林縣</option>
+      <option value="嘉義縣">嘉義縣</option>
+      <option value="屏東縣">屏東縣</option>
+      <option value="臺東縣">臺東縣</option>
+      <option value="台東縣">台東縣</option>
+      <option value="花蓮縣">花蓮縣</option>
+      <option value="澎湖線">澎湖線</option>
+      <option value="基隆市">基隆市</option>
+      <option value="新竹市">新竹市</option>
+      <option value="嘉義市">嘉義市</option>
+      <option value="臺北市">臺北市</option>
+      <option value="台北市">台北市</option>
+      <option value="高雄市">高雄市</option>
+      <option value="新北市">新北市</option>
+      <option value="臺中市">臺中市</option>
+      <option value="台中市">台中市</option>
+      <option value="臺南市">臺南市</option>
+      <option value="台南市">台南市</option>
+      <option value="連江縣">連江縣</option>
+      <option value="金門縣">金門縣</option>
+    </select>
+    <input type=" text" id="small-area">
+    <input type="submit" value="送出">
+    <input type="reset" value="重置">
+  </form>
 
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.js'
+    integrity='sha512-luUnkeG+uabiT2pZdi5ME5uADvq+FpDs2fK5V0nVXrHCND9F077fKaE9W//oJvGnWSmwQmCau63A6s3um1NZmg=='
+    crossorigin='anonymous'></script>
+  <script src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.js
+    integrity="sha512-sSOeacod972lTNk0ePyxrSSI6yoqvGRm7bbqtwqsY1r7TcdYiQn/a+KvaYQ0iacHBYE/MSEVjTNa2dglSz74vA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const resId = {
+      '宜蘭縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-003?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '桃園市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-007?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '新竹縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-011?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '苗栗縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-015?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '彰化縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-019?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '南投縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-023?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '雲林縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-027?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '嘉義縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-031?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '屏東縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-035?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '臺東縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-039?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '台東縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-039?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '花蓮縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-043?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '澎湖線': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-047?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '基隆市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-051?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '新竹市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-055?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '嘉義市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-059?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '臺北市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-063?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '台北市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-063?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '高雄市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-067?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '新北市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '臺中市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-075?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '台中市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-075?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '臺南市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '台南市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '連江縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-083?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON',
+      '金門縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-087?Authorization=CWA-3538B9F3-1190-4861-8523-3E66C9639ED8&format=JSON'
+    }
+
+    const elArea = document.getElementById('area')
+    const elSmallArea = document.getElementById('small-area')
+
+
+    const getData = async (area) => {
+      try {
+        const { data } = await axios.get(`${resId[area]}`)
+        console.log(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    // getData('宜蘭縣')
+  </script>
 </body>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.js'
-  integrity='sha512-luUnkeG+uabiT2pZdi5ME5uADvq+FpDs2fK5V0nVXrHCND9F077fKaE9W//oJvGnWSmwQmCau63A6s3um1NZmg=='
-  crossorigin='anonymous'></script>
-<script>
-
-</script>
 
 </html>
